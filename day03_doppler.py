@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt 
 import sys ,os 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'rv-pipeline'))
-from doppler import doppler_C , doppler_r
+from doppler import doppler_shift_classical , doppler_shift_relativistic
 from astropy import constants as const
 
 #low velocities
@@ -11,8 +11,8 @@ from astropy import constants as const
 wav = np.array([5000])
 velocities = np.linspace(-100,100,1000)
 
-shift_c = np.array([doppler_C(wav,v_t)[0] for v_t in velocities])
-shift_r = np.array([doppler_r(wav,v_t)[0] for v_t in velocities])
+shift_c = np.array([doppler_shift_classical(wav,v_t)[0] for v_t in velocities])
+shift_r = np.array([doppler_shift_relativistic(wav,v_t)[0] for v_t in velocities])
 
 c_ms = const.c.to("m/s").value
 diff_ms = (shift_r-shift_c)/wav[0] *c_ms
@@ -22,8 +22,8 @@ diff_ms = (shift_r-shift_c)/wav[0] *c_ms
 
 high_v = np.linspace(0,0.9*const.c.to("km/s").value,1000)
 
-shift_c_hv = np.array([doppler_C(wav,v_t)[0] for v_t in high_v])
-shift_r_hv = np.array([doppler_r(wav,v_t)[0] for v_t in high_v])
+shift_c_hv = np.array([doppler_shift_classical(wav,v_t)[0] for v_t in high_v])
+shift_r_hv = np.array([doppler_shift_relativistic(wav,v_t)[0] for v_t in high_v])
 
 #plots
 
@@ -71,7 +71,7 @@ ax3.legend(fontsize=10)
 ax3.grid(alpha=0.3)
 
 plt.tight_layout()
-plt.savefig('C:/Users/chand/OneDrive/Desktop/RV/rv-pipeline/results/day03_doppler_comparison.png', dpi=150, bbox_inches='tight')
+plt.savefig('C:/Users/chand/OneDrive/Desktop/RV/rv-pipeline/results/day03_doppler_shift_classicalomparison.png', dpi=150, bbox_inches='tight')
 plt.show()
 
 # verifying the functions
@@ -79,7 +79,7 @@ plt.show()
 v_t = 45
 wav = 5000.0
 expected_shift = wav*v_t/const.c.to("km/s").value
-actual_shift =  doppler_C(np.array([wav]),v_t)[0] - wav
+actual_shift =  doppler_shift_classical(np.array([wav]),v_t)[0] - wav
 
 print(f"expected shift = {expected_shift}")
 print(f"actual shift = {actual_shift}")
