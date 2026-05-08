@@ -38,7 +38,7 @@ for i ,snr in enumerate(snr_levels):
     ax.fill_between(wav,flux_clean-1.0/snr,flux_clean+1.0/snr,alpha = 0.2 , color=color[i],label = "± sigma band")
     ax.set_xlabel('wavelength',fontsize = 12)
     ax.set_ylabel("normalized flux",fontsize = 12)
-    ax.set_title(f"Snr = {snr} | measured snr = {measure_snr} ",fontsize = 12)
+    ax.set_title(f"Snr = {snr} | measured snr = {measure_snr:.1f} ",fontsize = 12)
     ax.legend(fontsize = 12,markerscale = 4)
     ax.grid(alpha=0.3)
     ax.set_ylim(0.2,1.3)
