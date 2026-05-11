@@ -72,7 +72,7 @@ fig ,axes = plt.subplots(1,3,figsize= (18,8))
 
 ax = axes[0]
 ax.plot(wav,flux_clean,'k--',linewidth=1.2,label= "template (rest frame)",zorder = 3)
-ax.plot(wav,flux_noisy,'-',color="blue",alpha = 0.6 , label = f"observed (v_r = {v_r} km/s, snr = {snr})")
+ax.plot(wav,flux_noisy,'.',color="blue",alpha = 0.6 , label = f"observed (v_r = {v_r} km/s, snr = {snr})")
 ax.set_xlabel("wavelength")
 ax.set_ylabel("normalized flux",fontsize = 11)
 ax.set_title("synthetic spectrum pipeline")
@@ -85,7 +85,7 @@ ax2.plot(wav,flux_noisy-flux_clean,linestyle = "--",linewidth = 1.2)
 ax2.axhline(0,color= 'black',linestyle= "--",linewidth = 1.0)
 ax2.axhline(+1.0/snr,color="red",linestyle = ":",linewidth = 1.0,label = "+1sigma")
 ax2.axhline(-1.0/snr,color="red",linestyle = ":",linewidth = 1.0,label = "-1sigma")
-ax.set_ylabel('residual(noise-clean)',fontsize =11)
+ax2.set_ylabel('residual(noise-clean)',fontsize =11)
 ax2.legend(fontsize = 10)
 ax2.grid(alpha = 0.3)
 
@@ -115,7 +115,7 @@ print(f"flux upper and lower bound checked")
 
 # shift  direction should be correct as its v>0 then redshift as move to right 
 # the 5000 angstrom line minimum should be at greater than 5000 wavelength
-mask_5000 = wav-5000 < 2.0
+mask_5000 = np.abs(wav-5000) < 2.0
 wav_5_clean = wav[mask_5000][(np.argmin(flux_clean[mask_5000]))]
 wav_5_shifted = wav[mask_5000][(np.argmin(flux_shifted[mask_5000]))]
 assert wav_5_shifted > wav_5_clean , f"minimum moved left | wav_clean = {wav_5_clean:.4f} | wav_shifted = {wav_5_shifted:.4f}"
